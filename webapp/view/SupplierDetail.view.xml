@@ -1,0 +1,96 @@
+<mvc:View
+  controllerName="finalproject.controller.SupplierDetail"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:table="sap.ui.table"
+  xmlns:f="sap.ui.layout.form">
+
+  <VBox class="sapUiSmallMargin">
+    <Title text="Supplier Details" level="H2" class="sapUiTinyMarginBottom"/>
+
+    <f:SimpleForm editable="false" layout="ResponsiveGridLayout"
+                  labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+                  adjustLabelSpan="false"
+                  columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false">
+      <f:content>
+        <Label text="Company Name" />
+        <Text text="{CompanyName}" />
+
+        <Label text="Contact Name" />
+        <Text text="{ContactName}" />
+
+        <Label text="Contact Title" />
+        <Text text="{ContactTitle}" />
+
+        <Label text="City" />
+        <Text text="{City}" />
+
+        <Label text="Region" />
+        <Text text="{Region}" />
+
+        <Label text="Country" />
+        <Text text="{Country}" />
+
+        <Label text="Phone" />
+        <Text text="{Phone}" />
+
+        <Label text="Address" />
+        <Text text="{Address}" />
+
+        <Label text="Postal Code" />
+        <Text text="{PostalCode}" />
+      </f:content>
+    </f:SimpleForm>
+
+    <Title text="Products" level="H3" class="sapUiTinyMarginTop"/>
+
+    <Button
+      text="New Product"
+      icon="sap-icon://add"
+      type="Emphasized"
+      press=".onOpenNewProductDialog"
+      class="sapUiSmallMarginBottom"/>
+
+    <table:Table
+      id="productsTable"
+      rows="{Products}"
+      enableColumnReordering="true"
+      selectionMode="None">
+
+      <table:columns>
+        <table:Column width="8rem">
+          <Label text="Details"/>
+          <table:template>
+            <Button
+              text="Details"
+              icon="sap-icon://hint"
+              type="Transparent"
+              press=".onSelectProduct"/>
+          </table:template>
+        </table:Column>
+
+        <table:Column sortProperty="ProductName" filterProperty="ProductName">
+          <Label text="Product Name"/>
+          <table:template>
+            <Text text="{ProductName}"/>
+          </table:template>
+        </table:Column>
+
+        <table:Column sortProperty="QuantityPerUnit" filterProperty="QuantityPerUnit">
+          <Label text="Quantity Per Unit"/>
+          <table:template>
+            <ObjectNumber number="{QuantityPerUnit}"/>
+          </table:template>
+        </table:Column>
+
+        <table:Column sortProperty="UnitPrice" filterProperty="UnitPrice" hAlign="End">
+          <Label text="Unit Price"/>
+          <table:template>
+            <ObjectNumber unit="$" number="{UnitPrice}"/>
+          </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </VBox>
+</mvc:View>

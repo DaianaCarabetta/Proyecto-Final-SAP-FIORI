@@ -1,0 +1,72 @@
+<mvc:View
+  controllerName="finalproject.controller.Home"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:table="sap.ui.table">
+
+  <VBox id="_IDGenVBox">
+    <Toolbar>
+      <Label text="Company Name:"/>
+      <Input id="filterCompany" liveChange="onFilter" placeholder="Buscar por nombre..." width="20%" />
+
+      <Label text="Country:"/>
+      <Input id="filterCountry" liveChange="onFilter" placeholder="Buscar por país..." width="20%" />
+    </Toolbar>
+
+    <table:Table
+      id="vendorTable"
+      rows="{/Suppliers}"
+      enableColumnReordering="true"
+      selectionMode="None">
+      <table:columns>
+        <table:Column width="8rem">
+            <Label text="Details"/>
+            <table:template>
+                <Button
+                text="Details"
+                icon="sap-icon://hint"
+                type="Transparent"
+                press=".onSelectSupplier"/>
+            </table:template>
+        </table:Column>
+        <table:Column sortProperty="SupplierID">
+        <Label text="Supplier ID"/>
+        <table:template>
+            <Text text="{SupplierID}"/>
+        </table:template>
+        </table:Column>
+        <table:Column sortProperty="CompanyName">
+            <Label text="Company Name"/>
+            <table:template>
+                <Text text="{CompanyName}"/>
+            </table:template>
+        </table:Column>
+        <table:Column sortProperty="ContactName">
+            <Label text="Contact Name"/>
+            <table:template>
+                <Text text="{ContactName}"/>
+            </table:template>
+        </table:Column>
+        <table:Column sortProperty="City">
+            <Label text="City"/>
+            <table:template>
+                <Text text="{City}"/>
+            </table:template>
+        </table:Column>
+        <table:Column sortProperty="Country">
+            <Label text="Country"/>
+            <table:template>
+                <Text text="{Country}"/>
+            </table:template>
+        </table:Column>
+        <table:Column sortProperty="Phone">
+            <Label text="Phone"/>
+            <table:template>
+                <Text text="{Phone}"/>
+            </table:template>
+        </table:Column>
+      </table:columns>
+    </table:Table>
+  </VBox>
+</mvc:View>

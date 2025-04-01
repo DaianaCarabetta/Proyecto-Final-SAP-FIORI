@@ -1,0 +1,26 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:l="sap.ui.layout"
+  xmlns:f="sap.ui.layout.form"
+  xmlns:core="sap.ui.core">
+  <Dialog
+    id="ProductDialog"
+    title="Product Details"
+    class="sapUiSizeCompact">
+
+    <f:SimpleForm editable="false" layout="ResponsiveGridLayout">
+      <f:content>
+        <Label text="Product Name"/>
+        <Text text="{ProductName}"/>
+        <Label text="Quantity Per Unit"/>
+        <ObjectNumber number="{QuantityPerUnit}"/>
+        <Label text="Unit Price"/>
+        <ObjectNumber unit="$" number="{UnitPrice}"/>
+      </f:content>
+    </f:SimpleForm>
+
+    <endButton>
+      <Button text="Close" press=".onCloseProductDialog"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>
