@@ -84,7 +84,7 @@
           </table:template>
         </table:Column>
 
-        <table:Column sortProperty="UnitPrice" filterProperty="UnitPrice" hAlign="End">
+        <table:Column sortProperty="UnitPrice" filterProperty="UnitPrice">
           <Label text="Unit Price"/>
           <table:template>
             <ObjectNumber unit="$" number="{UnitPrice}"/>
