@@ -2,69 +2,63 @@
   controllerName="finalproject.controller.Home"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns="sap.m"
-  xmlns:core="sap.ui.core"
   xmlns:table="sap.ui.table">
-
-  <VBox id="_IDGenVBox">
+  <VBox>
     <Toolbar>
-      <Label text="Company Name:"/>
-      <Input id="filterCompany" liveChange="onFilter" placeholder="Buscar por nombre..." width="20%" />
-
-      <Label text="Country:"/>
-      <Input id="filterCountry" liveChange="onFilter" placeholder="Buscar por país..." width="20%" />
+      <Label text="{i18n>CompanyName}:"/>
+      <Input id="filterCompany" liveChange="onFilter" placeholder="{i18n>SearchByName}" width="20%" />
+      <Label text="{i18n>Country}:"/>
+      <Input id="filterCountry" liveChange="onFilter" placeholder="{i18n>SearchByCountry}" width="20%" />
     </Toolbar>
-
     <table:Table
       id="vendorTable"
       rows="{/Suppliers}"
+      busy="true"
+      busyIndicatorDelay="0"
       enableColumnReordering="true"
       selectionMode="None">
       <table:columns>
         <table:Column width="8rem">
-            <Label text="Details"/>
-            <table:template>
-                <Button
-                text="Details"
-                icon="sap-icon://hint"
-                type="Transparent"
-                press=".onSelectSupplier"/>
-            </table:template>
+          <Label text="{i18n>Details}"/>
+          <table:template>
+            <Button text="{i18n>Details}" icon="sap-icon://hint" type="Transparent" press=".onSelectSupplier"/>
+          </table:template>
         </table:Column>
         <table:Column sortProperty="SupplierID">
-        <Label text="Supplier ID"/>
-        <table:template>
+          <Label text="{i18n>SupplierID}"/>
+          <table:template>
             <Text text="{SupplierID}"/>
-        </table:template>
+          </table:template>
         </table:Column>
         <table:Column sortProperty="CompanyName">
-            <Label text="Company Name"/>
-            <table:template>
-                <Text text="{CompanyName}"/>
-            </table:template>
+          <Label text="{i18n>CompanyName}"/>
+          <table:template>
+            <Text text="{CompanyName}"/>
+          </table:template>
         </table:Column>
         <table:Column sortProperty="ContactName">
-            <Label text="Contact Name"/>
-            <table:template>
-                <Text text="{ContactName}"/>
-            </table:template>
+          <Label text="{i18n>ContactName}"/>
+          <table:template>
+            <Text text="{ContactName}"/>
+          </table:template>
         </table:Column>
         <table:Column sortProperty="City">
-            <Label text="City"/>
-            <table:template>
-                <Text text="{City}"/>
-            </table:template>
+          <Label text="{i18n>City}"/>
+          <table:template>
+            <Text text="{City}"/>
+          </table:template>
         </table:Column>
         <table:Column sortProperty="Country">
-            <Label text="Country"/>
-            <table:template>
-                <Text text="{Country}"/>
-            </table:template>
+          <Label text="{i18n>Country}"/>
+          <table:template>
+            <Text text="{Country}"/>
+          </table:template>
         </table:Column>
         <table:Column sortProperty="Phone">
-            <Label text="Phone"/>
-            <table:template>
-                <Text text="{Phone}"/>
-            </table:template>
+          <Label text="{i18n>Phone}"/>
+          <table:template>
+            <Text text="{Phone}"/>
+          </table:template>
         </table:Column>
       </table:columns>
     </table:Table>

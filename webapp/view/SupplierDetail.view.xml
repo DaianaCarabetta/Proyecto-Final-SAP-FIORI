@@ -7,46 +7,46 @@
   xmlns:f="sap.ui.layout.form">
 
   <VBox class="sapUiSmallMargin">
-    <Title text="Supplier Details" level="H2" class="sapUiTinyMarginBottom"/>
+    <Title text="{i18n>SupplierDetails}" level="H2" class="sapUiTinyMarginBottom"/>
 
     <f:SimpleForm editable="false" layout="ResponsiveGridLayout"
                   labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
                   adjustLabelSpan="false"
                   columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false">
       <f:content>
-        <Label text="Company Name" />
+        <Label text="{i18n>CompanyName}" />
         <Text text="{CompanyName}" />
 
-        <Label text="Contact Name" />
+        <Label text="{i18n>ContactName}" />
         <Text text="{ContactName}" />
 
-        <Label text="Contact Title" />
+        <Label text="{i18n>ContactTitle}" />
         <Text text="{ContactTitle}" />
 
-        <Label text="City" />
+        <Label text="{i18n>City}" />
         <Text text="{City}" />
 
-        <Label text="Region" />
+        <Label text="{i18n>Region}" />
         <Text text="{Region}" />
 
-        <Label text="Country" />
+        <Label text="{i18n>Country}" />
         <Text text="{Country}" />
 
-        <Label text="Phone" />
+        <Label text="{i18n>Phone}" />
         <Text text="{Phone}" />
 
-        <Label text="Address" />
+        <Label text="{i18n>Address}" />
         <Text text="{Address}" />
 
-        <Label text="Postal Code" />
+        <Label text="{i18n>PostalCode}" />
         <Text text="{PostalCode}" />
       </f:content>
     </f:SimpleForm>
 
-    <Title text="Products" level="H3" class="sapUiTinyMarginTop"/>
+    <Title text="{i18n>Products}" level="H3" class="sapUiTinyMarginTop"/>
 
     <Button
-      text="New Product"
+      text="{i18n>NewProduct}"
       icon="sap-icon://add"
       type="Emphasized"
       press=".onOpenNewProductDialog"
@@ -60,34 +60,34 @@
 
       <table:columns>
         <table:Column width="8rem">
-          <Label text="Details"/>
+          <Label text="{i18n>Details}"/>
           <table:template>
             <Button
-              text="Details"
+              text="{i18n>Details}"
               icon="sap-icon://hint"
               type="Transparent"
               press=".onSelectProduct"/>
           </table:template>
         </table:Column>
 
-        <table:Column sortProperty="ProductName" filterProperty="ProductName">
-          <Label text="Product Name"/>
+        <table:Column sortProperty="ProductName" filterProperty="ProductName"  >
+          <Label text="{i18n>ProductName}"/>
           <table:template>
             <Text text="{ProductName}"/>
           </table:template>
         </table:Column>
 
         <table:Column sortProperty="QuantityPerUnit" filterProperty="QuantityPerUnit">
-          <Label text="Quantity Per Unit"/>
+          <Label text="{i18n>QuantityPerUnit}"/>
           <table:template>
             <ObjectNumber number="{QuantityPerUnit}"/>
           </table:template>
         </table:Column>
 
         <table:Column sortProperty="UnitPrice" filterProperty="UnitPrice">
-          <Label text="Unit Price"/>
+          <Label text="{i18n>UnitPrice}"/>
           <table:template>
-            <ObjectNumber unit="$" number="{UnitPrice}"/>
+            <ObjectNumber number="{ path: 'UnitPrice', formatter: '.formatter.formatPriceWithSymbol' }" />
           </table:template>
         </table:Column>
       </table:columns>

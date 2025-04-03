@@ -1,10 +1,13 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "../service/SupplierDetailService"
-  ], function (Controller, SupplierDetailService) {
+    "../service/SupplierDetailService",
+    "../util/Formatter"
+  ], function (Controller, SupplierDetailService, Formatter) {
     "use strict";
   
     return Controller.extend("finalproject.controller.SupplierDetail", {
+      formatter: Formatter,
+
       onInit: function () {
         SupplierDetailService.initialize(this);
       },

@@ -22,32 +22,32 @@
         singleContainerFullSize="false">
 
         <f:content>
-          <Label text="Product Name" />
+          <Label text="{i18n>ProductName}" />
           <Input id="inputProductName" type="Text" value="{newProduct>/ProductName}" required="true"/>
 
-          <Label text="Quantity Per Unit" />
+          <Label text="{i18n>QuantityPerUnit}" />
           <Input id="inputQuantity" type="Number" value="{newProduct>/QuantityPerUnit}" required="true"/>
 
-          <Label text="Unit Price" />
+          <Label text="{i18n>UnitPrice}" />
           <Input id="inputPrice" value="{newProduct>/UnitPrice}" type="Number" required="true"/>
 
-          <Label text="Category" />
+          <Label text="{i18n>Category}" />
           <Select id="inputCategory" selectedKey="{newProduct>/CategoryID}" items="{/Categories}">
             <core:Item key="{CategoryID}" text="{CategoryName}"/>
           </Select>
 
-          <Label text="Discontinued" />
+          <Label text="{i18n>Discontinued}" />
           <Switch id="inputDiscontinued" state="{newProduct>/Discontinued}"/>
         </f:content>
       </f:SimpleForm>
     </content>
 
     <beginButton>
-      <Button text="Create" type="Emphasized" press="onPressSaveData"/>
+      <Button text="{i18n>Create}" type="Emphasized" press="onPressSaveData"/>
     </beginButton>
 
     <endButton>
-      <Button text="Cancel" press="onCloseAddProductDialog"/>
+      <Button text="{i18n>Cancel}" press="onCloseAddProductDialog"/>
     </endButton>
 
   </Dialog>

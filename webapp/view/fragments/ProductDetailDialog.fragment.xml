@@ -10,17 +10,17 @@
 
     <f:SimpleForm editable="false" layout="ResponsiveGridLayout">
       <f:content>
-        <Label text="Product Name"/>
+        <Label text="{i18n>ProductName}"/>
         <Text text="{ProductName}"/>
-        <Label text="Quantity Per Unit"/>
+        <Label text="{i18n>QuantityPerUnit}"/>
         <ObjectNumber number="{QuantityPerUnit}"/>
-        <Label text="Unit Price"/>
-        <ObjectNumber unit="$" number="{UnitPrice}"/>
+        <Label text="{i18n>UnitPrice}"/>
+        <ObjectNumber number="{ path: 'UnitPrice', formatter: '.formatter.formatPriceWithSymbol' }" />
       </f:content>
     </f:SimpleForm>
 
     <endButton>
-      <Button text="Close" press=".onCloseProductDialog"/>
+      <Button text="{i18n>Close}" press=".onCloseProductDialog"/>
     </endButton>
   </Dialog>
 </core:FragmentDefinition>

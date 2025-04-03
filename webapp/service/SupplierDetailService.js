@@ -1,22 +1,37 @@
-// webapp/service/SupplierDetailService.js
 sap.ui.define([
-    "sap/ui/core/UIComponent",
-    "sap/ui/core/Fragment",
-    "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox"
-], function (UIComponent, Fragment, JSONModel, MessageBox) {
+  "sap/ui/core/UIComponent",
+  "sap/ui/core/Fragment",
+  "sap/ui/model/json/JSONModel",
+  "sap/m/MessageBox"
+], function(UIComponent, Fragment, JSONModel, MessageBox) {
   "use strict";
 
   let _productDialog = null;
   let _newProductDialog = null;
 
   function _bindSupplier(oEvent, oView) {
+    var oTable = oView.byId("productTable");
+    if (oTable) {
+      oTable.unbindAggregation("items");
+      oTable.setVisible(false);
+    }
+    oView.setBindingContext(null);
     const supplierId = oEvent.getParameter("arguments").supplierId;
     const sPath = `/Suppliers(${supplierId})`;
+    oView.setBusy(true);
     oView.bindElement({
       path: sPath,
-      parameters: {
-        expand: "Products"
+      parameters: { expand: "Products" },
+      events: {
+        dataRequested: function() {
+          oView.setBusy(true);
+        },
+        dataReceived: function() {
+          oView.setBusy(false);
+          if (oTable) {
+            oTable.setVisible(true);
+          }
+        }
       }
     });
   }
@@ -30,7 +45,6 @@ sap.ui.define([
       });
       oView.addDependent(_productDialog);
     }
-
     const oContext = oEvent.getSource().getBindingContext();
     if (oContext) {
       _productDialog.setBindingContext(oContext);
@@ -51,9 +65,9 @@ sap.ui.define([
   }
 
   return {
-
-    initialize: function (oController) {
+    initialize: function(oController) {
       const oView = oController.getView();
+      oView.setBusyIndicatorDelay(0);
       const oRouter = UIComponent.getRouterFor(oController);
       oRouter.getRoute("supplierDetail").attachPatternMatched((oEvent) => {
         _bindSupplier(oEvent, oView);
@@ -67,77 +81,65 @@ sap.ui.define([
       });
       oView.setModel(oNewProductModel, "newProduct");
     },
-
-    onSelectProduct: function (oEvent, oView, oController) {
+    onSelectProduct: function(oEvent, oView, oController) {
       _openProductDialog(oEvent, oView, oController);
     },
-
-    onOpenNewProductDialog: function (oView, oController) {
+    onOpenNewProductDialog: function(oView, oController) {
       _openNewProductDialog(oView, oController);
     },
-
-    onCloseProductDialog: function () {
+    onCloseProductDialog: function() {
       if (_productDialog) {
         _productDialog.close();
       }
     },
-
-    onCloseAddProductDialog: function () {
+    onCloseAddProductDialog: function() {
       if (_newProductDialog) {
         _newProductDialog.close();
       }
     },
-
-    onPressSaveData: function (oView) {
-        const oNewProductModel = oView.getModel("newProduct");
-        const oData = oNewProductModel.getData();
-  
-        const oInputProductName = oView.byId("inputProductName");
-        const oInputQuantity = oView.byId("inputQuantity");
-        const oInputPrice = oView.byId("inputPrice");
-        const oInputCategory = oView.byId("inputCategory");
-  
-        oInputProductName.setValueState("None");
-        oInputQuantity.setValueState("None");
-        oInputPrice.setValueState("None");
-        oInputCategory.setValueState("None");
-  
-        let bValid = true;
-        if (!oData.ProductName) {
-          oInputProductName.setValueState("Error");
-          bValid = false;
-        }
-        if (!oData.QuantityPerUnit) {
-          oInputQuantity.setValueState("Error");
-          bValid = false;
-        }
-        if (!oData.UnitPrice) {
-          oInputPrice.setValueState("Error");
-          bValid = false;
-        }
-        if (!oData.CategoryID) {
-          oInputCategory.setValueState("Error");
-          bValid = false;
-        }
-  
-        if (!bValid) {
-          MessageBox.error("Please fill in all required fields.");
-          return;
-        }
-  
-        MessageBox.success("Product created successfully (simulation).");
-  
-        oNewProductModel.setData({
-          ProductName: "",
-          QuantityPerUnit: "",
-          UnitPrice: "",
-          CategoryID: "",
-          Discontinued: false
-        });
-  
-        if (_newProductDialog) {
-          _newProductDialog.close();
-        }
-      },
+    onPressSaveData: function(oView) {
+      const oNewProductModel = oView.getModel("newProduct");
+      const oData = oNewProductModel.getData();
+      const oInputProductName = oView.byId("inputProductName");
+      const oInputQuantity = oView.byId("inputQuantity");
+      const oInputPrice = oView.byId("inputPrice");
+      const oInputCategory = oView.byId("inputCategory");
+      oInputProductName.setValueState("None");
+      oInputQuantity.setValueState("None");
+      oInputPrice.setValueState("None");
+      oInputCategory.setValueState("None");
+      let bValid = true;
+      if (!oData.ProductName) {
+        oInputProductName.setValueState("Error");
+        bValid = false;
+      }
+      if (!oData.QuantityPerUnit) {
+        oInputQuantity.setValueState("Error");
+        bValid = false;
+      }
+      if (!oData.UnitPrice) {
+        oInputPrice.setValueState("Error");
+        bValid = false;
+      }
+      if (!oData.CategoryID) {
+        oInputCategory.setValueState("Error");
+        bValid = false;
+      }
+      if (!bValid) {
+        MessageBox.error("Please fill in all required fields.");
+        return;
+      }
+      MessageBox.success("Product created successfully (simulation).");
+      oNewProductModel.setData({
+        ProductName: "",
+        QuantityPerUnit: "",
+        UnitPrice: "",
+        CategoryID: "",
+        Discontinued: false
+      });
+      if (_newProductDialog) {
+        _newProductDialog.close();
+      }
+    }
   };
 });

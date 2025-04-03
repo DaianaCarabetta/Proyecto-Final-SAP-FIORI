@@ -1,40 +1,39 @@
 sap.ui.define([
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
-    "../helper/FilterHelper"
-  ], function (Filter, FilterOperator, FilterHelper) {
-    "use strict";
-  
-    return {
-      filterVendors: function (oTable, sCompanyQuery, sCountryQuery) {
-        const aFilters = FilterHelper.buildSupplierFilters(sCompanyQuery, sCountryQuery);
-  
-        const oBinding = oTable.getBinding("rows");
-        if (oBinding) {
-          oBinding.filter(aFilters, "Application");
-        }
-      },
-  
-      selectSupplier: function (oEvent, oTable, oRouter) {
-        const oContext = oTable.getContextByIndex(oEvent.getParameter("rowIndex"));
-        if (!oContext) {
-          return;
-        }
-  
-        const sPath = oContext.getPath();
-        const supplierId = this._getSupplierIdFromContextPath(sPath);
-        if (!supplierId) {
-          console.error("Supplier ID not found in context path");
-          return;
-        }
-  
-        oRouter.navTo("supplierDetail", { supplierId: supplierId });
-      },
-  
-      _getSupplierIdFromContextPath: function (sPath) {
-        const supplierIdMatch = sPath.match(/\d+/);
-        return supplierIdMatch ? supplierIdMatch[0] : null;
+  "../helper/FilterHelper"
+], function(FilterHelper) {
+  "use strict";
+
+  return {
+    filterVendors: function(oTable, sCompanyQuery, sCountryQuery) {
+      var aFilters = FilterHelper.buildSupplierFilters(sCompanyQuery, sCountryQuery);
+      var oBinding = oTable.getBinding("rows");
+      if (oBinding) {
+        var fnDataRequested = function() {
+          oTable.setBusy(true);
+        };
+        var fnDataReceived = function() {
+          oTable.setBusy(false);
+          oBinding.detachDataRequested(fnDataRequested);
+          oBinding.detachDataReceived(fnDataReceived);
+        };
+        oBinding.attachDataRequested(fnDataRequested);
+        oBinding.attachDataReceived(fnDataReceived);
+        oBinding.filter(aFilters, "Application");
       }
-    };
-  });
-  
+    },
+    selectSupplier: function(oEvent, oTable, oRouter) {
+      var oButton = oEvent.getSource();
+      var oContext = oButton.getBindingContext();
+      if (!oContext) {
+        return;
+      }
+      oTable.setBusy(true);
+      var supplierId = oContext.getProperty("SupplierID");
+      oRouter.navTo("supplierDetail", { supplierId: supplierId });
+    },
+    _getSupplierIdFromContextPath: function(sPath) {
+      var supplierIdMatch = sPath.match(/\d+/);
+      return supplierIdMatch ? supplierIdMatch[0] : null;
+    }
+  };
+});
